@@ -1,0 +1,1 @@
+// This file is deleted. The content is moved to src/lib/auth.tsx
