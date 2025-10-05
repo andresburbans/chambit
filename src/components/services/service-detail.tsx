@@ -18,21 +18,21 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
 
   return (
     <div className="h-full flex flex-col">
-        <div className="relative h-48 md:h-64 w-full flex-shrink-0">
-          <Image
-            src={service.imageUrl}
-            alt={service.title}
-            fill
-            data-ai-hint={service.imageHint}
-            className="object-cover md:rounded-t-lg"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          <div className="absolute bottom-4 left-4 text-white">
-            <Badge variant="secondary" className="mb-2">{service.category}</Badge>
-            <h1 className="text-2xl md:text-3xl font-bold">{service.title}</h1>
-          </div>
+      <div className="relative h-48 md:h-64 w-full flex-shrink-0">
+        <Image
+          src={service.imageUrl}
+          alt={service.title}
+          fill
+          data-ai-hint={service.imageHint}
+          className="object-cover md:rounded-t-lg"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div className="absolute bottom-4 left-4 text-white">
+          <Badge variant="secondary" className="mb-2">{service.category}</Badge>
+          <h1 className="text-2xl md:text-3xl font-bold">{service.title}</h1>
         </div>
-      
+      </div>
+
       <div className="flex-grow overflow-y-auto p-4 md:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -43,15 +43,15 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
             <div>
               <p className="text-lg font-semibold">{service.expert.name}</p>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                 <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                    <span className="font-semibold text-foreground">{service.rating}</span>
-                    <span>({service.reviewCount} reviews)</span>
-                 </div>
-                 <span className="text-muted-foreground/50">|</span>
-                 <div className="flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    <span>{service.location}</span>
+                <div className="flex items-center gap-1">
+                  <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                  <span className="font-semibold text-foreground">{service.rating}</span>
+                  <span>({service.reviewCount} reviews)</span>
+                </div>
+                <span className="text-muted-foreground/50">|</span>
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-4 h-4" />
+                  <span>{service.location}</span>
                 </div>
               </div>
             </div>
@@ -65,26 +65,26 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
         <Separator className="my-6" />
 
         <div>
-          <h2 className="text-xl font-bold mb-2">About this service</h2>
+          <h2 className="text-xl font-bold mb-2">Acerca de este servicio</h2>
           <p className="text-muted-foreground leading-relaxed">{service.description}</p>
         </div>
-        
+
         <Separator className="my-6" />
 
         <div>
-            { user?.role === 'client' ? (
-                <>
-                    <h2 className="text-xl font-bold mb-4">Make an Offer</h2>
-                    <div className="bg-secondary/50 p-6 rounded-lg">
-                        <OfferForm service={service} />
-                    </div>
-                </>
-            ) : (
-                <div className="bg-secondary/50 p-6 rounded-lg text-center">
-                    <p className="font-medium">This is one of your service listings.</p>
-                    <p className="text-sm text-muted-foreground">Clients can submit offers here.</p>
-                </div>
-            )}
+          {user?.role === 'client' ? (
+            <>
+              <h2 className="text-xl font-bold mb-4">Make an Offer</h2>
+              <div className="bg-secondary/50 p-6 rounded-lg">
+                <OfferForm service={service} />
+              </div>
+            </>
+          ) : (
+            <div className="bg-secondary/50 p-6 rounded-lg text-center">
+              <p className="font-medium">This is one of your service listings.</p>
+              <p className="text-sm text-muted-foreground">Clients can submit offers here.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

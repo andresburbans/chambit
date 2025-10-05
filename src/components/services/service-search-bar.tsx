@@ -87,7 +87,7 @@ export function ServiceSearchBar({ onSearch }: ServiceSearchBarProps) {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <Input
           name="search"
-          placeholder="What service do you need?"
+          placeholder="¿Qué servicio necesitas?"
           className="pl-10 h-12 text-base rounded-lg md:rounded-r-none md:border-0 md:focus-visible:ring-0 md:focus-visible:ring-offset-0"
         />
       </div>

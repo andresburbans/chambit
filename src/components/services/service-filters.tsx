@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
 
@@ -43,7 +43,7 @@ export function ServiceFilters() {
                     </Select>
                     <Select>
                         <SelectTrigger className="w-full md:w-[150px]">
-                            <SelectValue placeholder="Valoración" />
+                            <SelectValue placeholder="Precio" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="economico">Económico</SelectItem>
