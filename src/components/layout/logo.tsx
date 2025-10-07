@@ -5,9 +5,8 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2 group" aria-label="Chambit services Home">
       <div className=" ">
-        <Image src="/LogoChambi-green.png" alt="Chambit Logo" width={40} height={40} className="h-8 w-8 sm:h-10 sm:w-10" />
+        <Image src="/logo-chambit-text.png" alt="Chambit Logo" width={717} height={205} className="h-8 w-auto sm:h-10 w-auto" />
       </div>
-      <span className="font-bold text-3xl text-foreground hidden sm:inline-block">Chambit</span>
     </Link>
   );
 }

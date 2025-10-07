@@ -5,6 +5,7 @@ import { AuthProvider } from '@/lib/auth.tsx';
 import { Header } from '@/components/layout/header';
 import { Toaster } from '@/components/ui/toaster';
 import { MobileNav } from '@/components/layout/mobile-nav';
+import { ConditionalFooter } from '@/components/layout/conditional-footer';
 
 export const metadata: Metadata = {
   title: 'Chambit',
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,6 +33,7 @@ export default function RootLayout({
               {children}
             </main>
             <MobileNav />
+            <ConditionalFooter />
           </div>
           <Toaster />
         </AuthProvider>

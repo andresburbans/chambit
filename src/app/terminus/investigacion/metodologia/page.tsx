@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Metadata } from "next"
 import { Card } from "@/components/ui/card"
+import { Compass, Hammer, Search, Rocket, Layers, Map, GitBranch } from "lucide-react"
 
 export const metadata: Metadata = {
     title: "Metodología — Investigación Chambit",
@@ -79,21 +80,25 @@ export default function MetodologiaPage() {
 
                         {/* Timeline superior */}
                         <div className="relative mb-8">
-                            <div className="hidden md:flex items-center justify-between">
+                            <div className="hidden md:flex items-center">
                                 {[1, 2, 3, 4].map((n, i) => (
-                                    <div key={n} className="flex-1 flex items-center">
-                                        <div className="relative flex items-center justify-center w-9 h-9 rounded-full bg-slate-900 text-white shadow-md">
+                                    <div key={n} className="flex items-center flex-1">
+                                        <div className="relative flex items-center justify-center w-9 h-9 rounded-full bg-slate-900 text-white shadow-md z-10">
                                             <span className="text-sm font-semibold">{n}</span>
                                         </div>
-                                        {i < 3 && <div className="h-1 flex-1 bg-slate-200 mx-4 rounded-full" />}
+                                        {i < 3 && (
+                                            <div className="flex-1 flex items-center px-3">
+                                                <div className="h-1 flex-1 bg-slate-200 rounded-full" />
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
-                            <div className="hidden md:grid grid-cols-4 text-xs text-slate-600 mt-2">
-                                <div className="text-left">Planificación</div>
-                                <div className="text-center">Prototipo</div>
-                                <div className="text-center">Búsqueda híbrida</div>
-                                <div className="text-right">Integración</div>
+                            <div className="hidden md:grid grid-cols-4 text-xs text-slate-600 mt-3">
+                                <div className="text-left pl-0">Planificación</div>
+                                <div className="text-left pl-0">Prototipo</div>
+                                <div className="text-left pl-0">Búsqueda híbrida</div>
+                                <div className="text-left pl-0">Integración</div>
                             </div>
                         </div>
 
@@ -160,7 +165,10 @@ export default function MetodologiaPage() {
                                 >
                                     <div className="flex items-start gap-3">
                                         <div className="shrink-0 mt-0.5">
-                                            <div className="w-6 h-6 text-slate-700">Icon</div>
+                                            {p.icon === "Compass" && <Compass className="w-6 h-6 text-slate-700" />}
+                                            {p.icon === "Hammer" && <Hammer className="w-6 h-6 text-slate-700" />}
+                                            {p.icon === "Search" && <Search className="w-6 h-6 text-slate-700" />}
+                                            {p.icon === "Rocket" && <Rocket className="w-6 h-6 text-slate-700" />}
                                         </div>
                                         <div>
                                             <h4 className="text-lg font-semibold leading-tight">{p.title}</h4>
@@ -196,32 +204,32 @@ export default function MetodologiaPage() {
                         {/* Leyenda de técnicas */}
                         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                                <span className="w-4 h-4">Layers</span> Componentes del modelo híbrido
+                                <Layers className="w-4 h-4" /> Componentes del modelo híbrido
                             </h3>
                             <div className="grid md:grid-cols-4 gap-3 text-sm">
                                 <div className="flex items-start gap-2">
-                                    <span className="w-4 h-4 mt-0.5">Map</span>
+                                    <Map className="w-4 h-4 mt-0.5" />
                                     <div>
                                         <div className="font-medium">Candidatos geoespaciales (H3)</div>
                                         <p className="text-slate-600">Selección por k‑rings alrededor de la celda del usuario.</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <span className="w-4 h-4 mt-0.5">Sigma</span>
+                                    <span className="w-4 h-4 mt-0.5 text-slate-700 text-lg leading-none">Σ</span>
                                     <div>
                                         <div className="font-medium">Reputación bayesiana</div>
                                         <p className="text-slate-600">S_bayes con priors C_global y m; señales de recencia/fiabilidad.</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <span className="w-4 h-4 mt-0.5">GitBranch</span>
+                                    <GitBranch className="w-4 h-4 mt-0.5" />
                                     <div>
                                         <div className="font-medium">WLC‑lite</div>
                                         <p className="text-slate-600">Pre‑ordenación multi‑criterio normalizada (Top‑K a LTR).</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <span className="w-4 h-4 mt-0.5">Search</span>
+                                    <Search className="w-4 h-4 mt-0.5" />
                                     <div>
                                         <div className="font-medium">Learning‑to‑Rank</div>
                                         <p className="text-slate-600">Ordenamiento final con features geo/rep/afin/contexto.</p>

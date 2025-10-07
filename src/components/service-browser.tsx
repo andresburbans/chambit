@@ -191,9 +191,13 @@ export function ServiceBrowser({ services }: { services: Service[] }) {
           {hasSearched && <ServiceFilters />}
         </div>
       </div>
+
+      {/*contenedor principal: dos columnas (lista servicios + detalle servicio) */}
       <div className="flex-grow overflow-visible">
+
+        {/*contenedor de la columna izquierda de serviceCars */}
         <div className="grid md:grid-cols-12 max-w-7xl mx-auto gap-6">
-          <div className="md:col-span-5 lg:col-span-4">
+          <div className="md:col-span-6 lg:col-span-5">
             <div className="overflow-y-auto max-h-[calc(100vh-200px)]" ref={scrollContainerRef}>
               <ServiceList services={displayedServices} onSelectService={handleSelectService} selectedServiceId={selectedService?.id} />
               {isLoadingMore && (
@@ -204,7 +208,9 @@ export function ServiceBrowser({ services }: { services: Service[] }) {
               )}
             </div>
           </div>
-          <div className="hidden md:block md:col-span-7 lg:col-span-8">
+          {/*contenedor de la columna derecha de serviceDetails */}
+
+          <div className="hidden md:block md:col-span-6 lg:col-span-7">
             <div className="sticky top-24 overflow-y-auto max-h-[calc(100vh-200px)]">
               {selectedService ? <ServiceDetail service={selectedService} /> :
                 <div className="flex items-center justify-center h-full text-muted-foreground">

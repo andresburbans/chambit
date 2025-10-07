@@ -15,7 +15,7 @@ export function ServiceCard({ service, onSelect, isSelected }: ServiceCardProps)
   return (
     <Card
       className={cn(
-        'cursor-pointer transition-all duration-200 hover:shadow-md hover:border-primary/50',
+        'cursor-pointer transition-all duration-200 hover:shadow-md hover:border-primary/50 w-full max-w-[480px]',
         isSelected ? 'border-primary shadow-lg' : 'border-border'
       )}
       onClick={() => onSelect(service)}
@@ -49,10 +49,10 @@ export function ServiceCard({ service, onSelect, isSelected }: ServiceCardProps)
               </div>
             </div>
             <div className="mt-2">
-                <Badge variant="secondary" className="text-base font-bold text-primary bg-primary/10 py-1 px-3">
-                  ${service.price}
-                  <span className="font-normal text-sm text-muted-foreground ml-1">/{service.priceType === 'hourly' ? 'hr' : 'project'}</span>
-                </Badge>
+              <Badge variant="secondary" className="text-base font-bold text-primary bg-primary/10 py-1 px-3">
+                ${service.price}
+                <span className="font-normal text-sm text-muted-foreground ml-1">/{service.priceType === 'hourly' ? 'hr' : 'project'}</span>
+              </Badge>
             </div>
           </div>
         </div>

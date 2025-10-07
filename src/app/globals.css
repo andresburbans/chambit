@@ -84,7 +84,123 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* === Aurora Footer Background === */
+.footer-aurora {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* evita mezclar blends con el resto de la página */
+}
+
+/* Contenedor de "burbujas" de aurora */
+.footer-aurora .aurora-layer {
+  position: absolute;
+  inset: -20% -20% -10% -20%;
+  /* se extiende un poco para evitar cortes */
+  pointer-events: none;
+  filter: blur(40px);
+  opacity: .75;
+}
+
+/* Cada "burbujita" */
+.footer-aurora .aurora-bubble {
+  position: absolute;
+  width: 42vw;
+  height: 42vw;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  /* efecto aurora al superponer */
+  animation: auroraDrift var(--speed, 26s) linear infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Paleta (verdes + ámbar + azul frío para contraste suave) */
+.footer-aurora .bubble-1 {
+  background: radial-gradient(closest-side, rgba(121, 229, 118, .40), transparent 60%);
+  top: 10%;
+  left: -8%;
+  --speed: 28s;
+}
+
+.footer-aurora .bubble-2 {
+  background: radial-gradient(closest-side, rgba(76, 175, 80, .35), transparent 60%);
+  top: -6%;
+  right: -12%;
+  --speed: 32s;
+}
+
+.footer-aurora .bubble-3 {
+  background: radial-gradient(closest-side, rgba(255, 193, 7, .28), transparent 60%);
+  bottom: -8%;
+  left: 15%;
+  --speed: 30s;
+}
+
+.footer-aurora .bubble-4 {
+  background: radial-gradient(closest-side, rgba(0, 170, 255, .22), transparent 60%);
+  bottom: -12%;
+  right: 8%;
+  --speed: 34s;
+}
+
+@keyframes auroraDrift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: translate3d(4%, -2%, 0) rotate(10deg) scale(1.05);
+  }
+
+  50% {
+    transform: translate3d(-3%, 3%, 0) rotate(20deg) scale(1.03);
+  }
+
+  75% {
+    transform: translate3d(6%, 2%, 0) rotate(10deg) scale(1.06);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+/* Línea superior animable (inspirada en "disposición" del primer pen) */
+.footer-aurora::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background:
+    linear-gradient(90deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(124, 197, 112, .6) 20%,
+      rgba(121, 229, 118, 1) 50%,
+      rgba(124, 197, 112, .6) 80%,
+      rgba(0, 0, 0, 0) 100%);
+  opacity: .9;
+}
+
+/* Respeto accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .footer-aurora .aurora-bubble {
+    animation: none;
+  }
+}
+
+/* Ajuste en dark mode (si usas) */
+.dark .footer-aurora {
+  background: #0b0b0b;
+}
+
+.dark .footer-aurora::before {
+  opacity: .5;
 }

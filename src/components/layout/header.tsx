@@ -61,13 +61,13 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-[var(--header-height)] bg-white border-b">
       <div className="px-16 flex h-full items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-8">
           <Logo />
+
           <div className="hidden md:flex gap-4 relative top-[5px]">
             <div
               className="flex items-center"
               onMouseEnter={() => setActiveMenu('recluta')}
-              onMouseLeave={() => setActiveMenu(null)}
             >
               <Link href="/building" className="flex items-center gap-1 text-sm font-medium text-[#0f0f0f] hover:text-[#34af00] transition-colors">
                 Recluta expertos {activeMenu === 'recluta' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -76,7 +76,6 @@ export function Header() {
             <div
               className="flex items-center"
               onMouseEnter={() => setActiveMenu('como')}
-              onMouseLeave={() => setActiveMenu(null)}
             >
               <Link href="/building" className="flex items-center gap-1 text-sm font-medium text-[#0f0f0f] hover:text-[#34af00] transition-colors">
                 Cómo funciona {activeMenu === 'como' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -131,17 +130,25 @@ export function Header() {
         >
           <div className="px-16 py-6">
             {activeMenu === 'recluta' && (
-              <div className="flex gap-8">
-                <Link href="/building/talento" className="text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Encontrar talento</Link>
-                <Link href="/building/proyecto" className="text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Publicar proyecto</Link>
-                <Link href="/building/contratos" className="text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Gestionar contratos</Link>
+              <div
+                className="grid grid-cols-3 gap-2 p-4"
+                onMouseEnter={() => { }}
+                onMouseLeave={() => setActiveMenu(null)}
+              >
+                <Link href="/building/talento" className="font-semibold text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Encontrar talento</Link>
+                <Link href="/building/proyecto" className="font-semibold text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Publicar proyecto</Link>
+                <Link href="/building/contratos" className="font-semibold text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Gestionar contratos</Link>
               </div>
             )}
             {activeMenu === 'como' && (
-              <div className="flex gap-8">
-                <Link href="/building/clientes" className="text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Para clientes</Link>
-                <Link href="/building/expertos" className="text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Para expertos</Link>
-                <Link href="/building/precios" className="text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Precios</Link>
+              <div
+                className="grid grid-cols-3 gap-2 p-4"
+                onMouseEnter={() => { }}
+                onMouseLeave={() => setActiveMenu(null)}
+              >
+                <Link href="/building/clientes" className="font-semibold text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Para clientes</Link>
+                <Link href="/building/expertos" className="font-semibold text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Para expertos</Link>
+                <Link href="/building/precios" className="font-semibold text-sm text-[#0f0f0f] hover:text-[#34af00] transition-colors">Precios</Link>
               </div>
             )}
             {activeMenu === 'terminus' && (
