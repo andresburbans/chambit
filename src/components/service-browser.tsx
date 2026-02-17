@@ -211,7 +211,7 @@ export function ServiceBrowser({ services }: { services: Service[] }) {
           {/*contenedor de la columna derecha de serviceDetails */}
 
           <div className="hidden md:block md:col-span-6 lg:col-span-7">
-            <div className="sticky top-24 overflow-y-auto max-h-[calc(100vh-200px)]">
+            <div className="stickyacion top-24 overflow-y-auto max-h-[calc(100vh-200px)]">
               {selectedService ? <ServiceDetail service={selectedService} /> :
                 <div className="flex items-center justify-center h-full text-muted-foreground">
                   <div className="text-center">

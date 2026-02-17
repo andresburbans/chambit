@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Metadata } from "next"
 import { Card } from "@/components/ui/card"
-import { Compass, Hammer, Search, Rocket, Layers, Map, GitBranch } from "lucide-react"
+import { Compass, Hammer, Search, Rocket, Layers, Map, Database, Monitor, Smartphone } from "lucide-react"
 
 export const metadata: Metadata = {
     title: "Metodología — Investigación Chambit",
@@ -15,14 +15,13 @@ export default function MetodologiaPage() {
             <section className="flex flex-col gap-6">
                 <div className="inline-flex items-center gap-2 text-xs font-medium text-[#2E382E]">
                     <span className="inline-block h-2 w-2 rounded-full bg-[#4CAF50]" />
-                    Investigación
                 </div>
                 <h1 className="text-4xl font-bold leading-tight tracking-tight">
                     Metodología de investigación
                 </h1>
                 <p className="max-w-3xl text-[15px] text-muted-foreground">
                     La <strong>metodología</strong> de Chambit combina <strong>investigación cualitativa y cuantitativa</strong>,
-                    <strong>desarrollo iterativo</strong> y <strong>validación experimental</strong>. Utilizamos un
+                    <strong> desarrollo iterativo</strong> y <strong>validación experimental</strong>. Utilizamos un
                     enfoque <strong>mixed-methods</strong> que integra datos de usuario, análisis técnico y
                     experimentación controlada para garantizar solidez científica y aplicabilidad práctica.
                 </p>
@@ -65,21 +64,20 @@ export default function MetodologiaPage() {
                 </Card>
             </section>
 
-            {/* DIAGRAM DE METODOLOGÍA */}
+            {/* DIAGRAMA DE METODOLOGÍA */}
             <section className="space-y-4">
-                <h2 className="text-2xl font-semibold">Diagrama de metodología</h2>
-                <div className="min-h-[100vh] w-full bg-gradient-to-b from-white to-slate-50 text-slate-900 p-6 md:p-10">
-                    <div className="mx-auto max-w-6xl">
-                        <header className="mb-8">
-                            <h3 className="text-3xl md:text-4xl font-bold tracking-tight">Metodología — Chambit</h3>
-                            <p className="mt-2 text-slate-600 max-w-3xl">
-                                Fases secuenciales alineadas a los objetivos del proyecto y a la modalidad de Investigación e Innovación. El
-                                diagrama resume el flujo desde la planificación hasta la integración del modelo de búsqueda geo‑contextual.
+                <div className="w-full bg-gradient-to-b from-white to-slate-50 text-slate-900 py-10">
+                    <div className="mx-auto max-w-6xl px-6 md:px-10 space-y-8">
+                        {/* HEADER */}
+                        <header>
+                            <h3 className="text-3xl md:text-4xl font-bold tracking-tight">Diagrama metodológico</h3>
+                            <p className="mt-2 text-slate-600 text-justify">
+                                Aquí se presentan las fases secuenciales alineadas con los objetivos del proyecto. Este diagrama resume el flujo de trabajo, desde la planificación hasta el lanzamiento del producto mínimo viable (PMV), basado en el innovador modelo de búsqueda geo-contextual, que mejorará significativamente la experiencia de conexión entre clientes y prestadores de servicios.
                             </p>
                         </header>
 
                         {/* Timeline superior */}
-                        <div className="relative mb-8">
+                        <div className="relative">
                             <div className="hidden md:flex items-center">
                                 {[1, 2, 3, 4].map((n, i) => (
                                     <div key={n} className="flex items-center flex-1">
@@ -107,56 +105,59 @@ export default function MetodologiaPage() {
                             {[
                                 {
                                     id: 1,
-                                    title: "Fase 1 — Planificación y Diseño del Sistema",
+                                    title: "Fase 1: Planificación y diseño",
                                     icon: "Compass",
                                     color: "from-sky-100 to-sky-50",
                                     bullets: [
-                                        "Arquitectura PWA + Backend serverless (Firebase)",
-                                        "Modelo de datos NoSQL con campos GeoPoint",
-                                        "Indexación geoespacial con rejilla H3 (resolución y k)",
-                                        "Backlog y Sprints (Scrum) definidos",
+                                        "Lógica de negocio (Lean starup, BMC)",
+                                        "Análisis del fenómeno espacial",
+                                        "Diseño del modelo de datos geográfico",
+                                        "Análisis espacial, consulta y visualización", "Datos, metadatos y privacidad"
+                                        ,
                                     ],
-                                    chips: ["PWA", "Firebase", "Firestore", "H3"],
+                                    chips: ["Lean startup", "Geodata", "SIG", "PII"],
                                 },
                                 {
                                     id: 2,
-                                    title: "Fase 2 — Desarrollo básico del prototipo (Sprints)",
+                                    title: "Fase 2: Captura, persistencia, consulta y visualización",
                                     icon: "Hammer",
                                     color: "from-emerald-100 to-emerald-50",
                                     bullets: [
-                                        "Autenticación y perfiles (cliente/experto)",
-                                        "UI base: Home, listado, detalle, formularios",
-                                        "Colecciones users/services/requests",
-                                        "Mapa interactivo (vista de cobertura)",
+                                        "Prototipo PWA base",
+                                        "Bases de datos alfanumérica y espacial",
+                                        "Indexación por rejilla hexagonal H3",
+                                        "Georeferenciación dinámica y operativa", "Geovisualización operativa (Lista/mapa)"
+                                        ,
                                     ],
-                                    chips: ["Auth", "UI", "CRUD", "Mapas"],
+                                    chips: ["PWA base (UI/UX)", "DB", "H3", "visualización"],
                                 },
                                 {
                                     id: 3,
-                                    title: "Fase 3 — Modelo de búsqueda geo‑contextual (híbrido)",
+                                    title: "Fase 3: Modelo de búsqueda geo-contextual (híbrido)",
                                     icon: "Search",
                                     color: "from-amber-100 to-amber-50",
                                     bullets: [
-                                        "Candidatos por H3 k‑rings (proximidad)",
-                                        "Reputación bayesiana S_bayes y señales (recencia/fiabilidad)",
-                                        "WLC‑lite (pre‑ordenación multi‑criterio)",
-                                        "Afinidad: embeddings MF / Node2Vec",
-                                        "Ordenamiento final con Learning‑to‑Rank (LTR)",
+                                        "Filtrado por candidatos H3 y puntuación probabilística",
+                                        "Construcción del vector de características y ordenamiento LTR (opcional)",
+                                        "Integración de las partes del modelo de búsqueda",
+                                        "Dashboard de geoanálisis básico"
+                                        ,
                                     ],
-                                    chips: ["H3", "Bayes", "WLC", "Embeddings", "LTR"],
+                                    chips: ["Busqueda", "Filtrado", "WLC", "LTR"],
                                 },
                                 {
                                     id: 4,
-                                    title: "Fase 4 — Integración, pruebas internas y despliegue",
+                                    title: "Fase 4: Integración, pruebas de funcionalidad y despliegue del sistema",
                                     icon: "Rocket",
                                     color: "from-violet-100 to-violet-50",
                                     bullets: [
-                                        "Integración del pipeline de búsqueda en la PWA",
-                                        "Pruebas funcionales/UX/rendimiento (internas)",
-                                        "Caching, seguridad y reglas de acceso (deny‑by‑default)",
-                                        "Despliegue en Hosting + manifest PWA/Service Worker",
+                                        "Conexión del PWA base con el modelo de búsqueda",
+                                        "pruebas ligeras de rendimiento y resiliencia",
+                                        "verificación de coherencia funcional y espacial",
+                                        "Caching, seguridad y reglas de acceso", "Despliegue operacional y documentación (manual de usuario)"
+                                        ,
                                     ],
-                                    chips: ["E2E", "UX", "Rules", "Hosting"],
+                                    chips: ["Integración", "Tests", "Seguridad", "Despliegue"],
                                 },
                             ].map((p, idx) => (
                                 <div
@@ -201,45 +202,54 @@ export default function MetodologiaPage() {
                             ))}
                         </div>
 
-                        {/* Leyenda de técnicas */}
-                        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        {/* Componentes del modelo híbrido */}
+                        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                                <Layers className="w-4 h-4" /> Componentes del modelo híbrido
+                                <Layers className="w-4 h-4" /> Componentes del SIG como aplicación.
                             </h3>
                             <div className="grid md:grid-cols-4 gap-3 text-sm">
                                 <div className="flex items-start gap-2">
-                                    <Map className="w-4 h-4 mt-0.5" />
+                                    <Smartphone className="w-20 h-auto mt-1" />
                                     <div>
-                                        <div className="font-medium">Candidatos geoespaciales (H3)</div>
-                                        <p className="text-slate-600">Selección por k‑rings alrededor de la celda del usuario.</p>
+                                        <div className="font-medium">Cliente PWA</div>
+                                        <p className="text-slate-600 text-justify">
+                                            Interfaz web progresiva que permite la interacción fluida entre cliente y prestador,
+                                            permitiendo la búsqueda, visualización y solicitud de servicios en tiempo real.
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <span className="w-4 h-4 mt-0.5 text-slate-700 text-lg leading-none">Σ</span>
+                                    <Database className="w-20 h-4 mt-1" />
                                     <div>
-                                        <div className="font-medium">Reputación bayesiana</div>
-                                        <p className="text-slate-600">S_bayes con priors C_global y m; señales de recencia/fiabilidad.</p>
+                                        <div className="font-medium">Gestión de datos</div>
+                                        <p className="text-slate-600 text-justify">
+                                            DB persistente para el almacenamiento, gestión y control de datos alfanuméricos georreferenciados, permitiendo consultas rápidas y seguras.
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <GitBranch className="w-4 h-4 mt-0.5" />
+                                    <Search className="w-20 h-auto mt-1" />
                                     <div>
-                                        <div className="font-medium">WLC‑lite</div>
-                                        <p className="text-slate-600">Pre‑ordenación multi‑criterio normalizada (Top‑K a LTR).</p>
+                                        <div className="font-medium">Modelo de búsqueda geo-contextual</div>
+                                        <p className="text-slate-600 text-justify">
+                                            Modelo computacional basado en algoritmos híbridos que pondera cercanía, reputación y afinidad conductual para ordenar candidatos según pertinencia espacial y contextual.
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
-                                    <Search className="w-4 h-4 mt-0.5" />
+                                    <Monitor className="w-20 h-auto mt-1" />
                                     <div>
-                                        <div className="font-medium">Learning‑to‑Rank</div>
-                                        <p className="text-slate-600">Ordenamiento final con features geo/rep/afin/contexto.</p>
+                                        <div className="font-medium">Dashboard administrativo</div>
+                                        <p className="text-slate-600 text-justify">
+                                            Dashboard intuitivo de monitoreo que centraliza datos de uso, visualiza servicios en mapas de calor, analiza su distribución espacial y genera métricas simples para decisiones informadas.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
                         {/* Nota de alcance */}
-                        <p className="mt-4 text-xs text-slate-500">
+                        <p className="text-xs text-slate-500">
                             Nota: Las actividades indicadas se enfocan en la planificación, construcción e integración del sistema. Cualquier
                             evaluación externa o piloto se gestionará fuera del alcance metodológico comprometido en esta sección.
                         </p>
