@@ -1,8 +1,14 @@
-import type { NextConfig } from 'next';
-import withPWA from 'next-pwa';
+import type { NextConfig } from "next";
+import withSerwistInit from "@serwist/next";
+
+const withSerwist = withSerwistInit({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
+  disable: process.env.NODE_ENV === "development",
+});
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // TypeScript & ESLint — we'll progressively fix these
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -10,10 +16,13 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['picsum.photos', 'images.unsplash.com', 'placehold.co'],
+    remotePatterns: [
+      { protocol: "https", hostname: "picsum.photos" },
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "placehold.co" },
+      { protocol: "https", hostname: "firebasestorage.googleapis.com" },
+    ],
   },
 };
 
-export default withPWA({
-  dest: 'public',
-})(nextConfig);
+export default withSerwist(nextConfig);
