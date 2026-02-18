@@ -12,7 +12,6 @@ export function Footer() {
                 <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                     {/* Marca + tagline */}
                     <div className="flex items-center gap-3">
-                        {/* Logo en grises (aplico filtro, no necesitas archivo extra) */}
                         <Image
                             src="/LogoChambi-green.png"
                             alt="Chambit"
@@ -35,24 +34,18 @@ export function Footer() {
 
                     {/* Navegación legal */}
                     <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[#0f0f0f]">
-                        <Link className="hover:text-[#79E576] transition-colors" href="/derechos-reservados-2025">
-                            Derechos reservados {year}
-                        </Link>
+                        <span className="text-gray-500">© {year} Chambit</span>
                         <span className="inline-block w-px h-4 bg-gray-200" />
-                        <Link className="hover:text-[#79E576] transition-colors" href="/terminos">
+                        <Link className="hover:text-[#34af00] transition-colors" href="/terminos">
                             Términos y condiciones
                         </Link>
                         <span className="inline-block w-px h-4 bg-gray-200" />
-                        <Link className="hover:text-[#79E576] transition-colors" href="/privacidad">
+                        <Link className="hover:text-[#34af00] transition-colors" href="/privacidad">
                             Política de privacidad
                         </Link>
                         <span className="inline-block w-px h-4 bg-gray-200" />
-                        <Link className="hover:text-[#79E576] transition-colors" href="/autorizacion-datos">
-                            Autorización para procesamiento de datos
-                        </Link>
-                        <span className="inline-block w-px h-4 bg-gray-200" />
-                        <Link className="hover:text-[#79E576] transition-colors" href="/terminus/proyecto/contactanos">
-                            Contáctanos
+                        <Link className="hover:text-[#34af00] transition-colors" href="/autorizacion-datos">
+                            Tratamiento de datos
                         </Link>
                     </nav>
                 </div>
