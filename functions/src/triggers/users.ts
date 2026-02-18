@@ -22,6 +22,10 @@ export const onUserCreate = functions.auth.user().onCreate(async (user: admin.au
         preferredCategories: [],
         expertPopupDismissals: 0,
 
+        // Country & expert status defaults
+        country: "CO",
+        isExpertEnabled: false,
+
         createdAt: admin.firestore.FieldValue.serverTimestamp() as any,
         lastActiveAt: admin.firestore.FieldValue.serverTimestamp() as any, // Renamed from updatedAt
     };

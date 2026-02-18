@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Star, MapPin, MessageSquare, Heart } from 'lucide-react';
 import { OfferForm } from './offer-form';
-import { useAuth } from '@/lib/auth.tsx';
+import { useAuth } from '@/lib/auth';
 
 type ServiceDetailProps = {
   service: Service;

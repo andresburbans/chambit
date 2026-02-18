@@ -3,15 +3,15 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, Briefcase, User, Bell } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useAuth } from "@/lib/auth.tsx"
+import { useAuth } from "@/lib/auth"
 
 export function MobileNav() {
   const pathname = usePathname()
   const { user } = useAuth()
-  
+
   const navItems = user ? [
     { href: "/", label: "Explore", icon: Home },
-    user.role === 'client' 
+    user.role === 'client'
       ? { href: "/dashboard/requests", label: "Requests", icon: Briefcase }
       : { href: "/dashboard/opportunities", label: "Jobs", icon: Briefcase },
     { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
@@ -20,11 +20,11 @@ export function MobileNav() {
     { href: "/", label: "Explore", icon: Home },
     { href: "/login", label: "Login", icon: User },
   ]
-  
+
   if (pathname.startsWith('/dashboard') || pathname.startsWith('/login') || pathname.startsWith('/register')) {
     return null;
   }
-  
+
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-sm border-t z-40">
       <div className="flex justify-around items-center h-full">

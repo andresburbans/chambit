@@ -1,7 +1,8 @@
+```
 import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { AuthProvider } from '@/lib/auth.tsx';
+import { AuthProvider } from '@/lib/auth';
 import { Header } from '@/components/layout/header';
 import { Toaster } from '@/components/ui/toaster';
 import { MobileNav } from '@/components/layout/mobile-nav';

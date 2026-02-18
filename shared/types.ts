@@ -38,6 +38,11 @@ export interface User {
     lastActiveAt: FirebaseTimestamp;
     expertPopupDismissals: number;
     expert?: ExpertProfile;
+
+    // Validation & Geofencing
+    country: string; // ISO 3166-1 alpha-2 (e.g., "CO")
+    isExpertEnabled: boolean; // Managed by admin/system
+    geozoneId?: string; // Reference to active operating zone (e.g., "cali-urban")
 }
 
 export interface ExpertProfile {
@@ -157,6 +162,24 @@ export interface Subcategory {
     prc: number | null; // Precio de Referencia de Calidad (E08)
     prcLastUpdated?: FirebaseTimestamp;
     expertCount: number;
+}
+
+// ============================================================
+// D07 — Geozones (Authorized Operating Areas)
+// ============================================================
+
+export interface Geozone {
+    id: string;
+    name: string;        // "Santiago de Cali"
+    citySlug: string;    // "cali"
+    country: "CO";
+    active: boolean;
+    center: { lat: number, lng: number };
+    zoom: number;        // Default dashboard zoom
+    // List of H3 Res 7 indices that cover the authorized area
+    // Using Res 7 for the boundary check is performance-efficient
+    boundaryH3: string[];
+    createdAt: FirebaseTimestamp;
 }
 
 // ============================================================
