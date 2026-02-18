@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useAuth } from "@/lib/auth.tsx"
+import { useAuth } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import { UserNav } from "@/components/auth/user-nav"
 import { Logo } from "./logo"

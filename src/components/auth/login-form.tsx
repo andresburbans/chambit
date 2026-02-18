@@ -13,17 +13,23 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useAuth } from "@/lib/auth.tsx"
 import Link from "next/link"
-import { Loader2 } from "lucide-react"
+import { Loader2, AlertCircle } from "lucide-react"
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+  password: z.string().min(1, { message: "Password is required." }),
 })
 
 export function LoginForm() {
-  const { login, loading } = useAuth();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,13 +39,39 @@ export function LoginForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    login(values.email, values.password)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+    setError(null);
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      router.push("/dashboard"); // Redirect on success
+    } catch (err: any) {
+      console.error("Login error:", err);
+      // Friendly error messages
+      let message = "Invalid email or password.";
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        message = "Invalid credentials.";
+      } else if (err.code === 'auth/too-many-requests') {
+        message = "Too many failed attempts. Please try again later.";
+      }
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
         <FormField
           control={form.control}
           name="email"
@@ -60,8 +92,8 @@ export function LoginForm() {
             <FormItem>
               <div className="flex justify-between">
                 <FormLabel>Password</FormLabel>
-                <Link href="#" className="text-sm font-medium text-primary hover:underline">
-                    Forgot your password?
+                <Link href="#" className="text-sm font-medium text-[#34af00] hover:underline">
+                  Forgot your password?
                 </Link>
               </div>
               <FormControl>
@@ -72,16 +104,16 @@ export function LoginForm() {
           )}
         />
         <div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full bg-[#34af00] hover:bg-[#2d9600] text-white" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Log in
           </Button>
         </div>
         <p className="text-center text-sm text-muted-foreground">
-            New to Chambit?{' '}
-            <Link href="/register" className="font-medium text-primary hover:underline">
-                Sign up
-            </Link>
+          New to Chambit?{' '}
+          <Link href="/register" className="font-medium text-[#34af00] hover:underline">
+            Sign up
+          </Link>
         </p>
       </form>
     </Form>

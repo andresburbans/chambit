@@ -14,11 +14,17 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useAuth } from "@/lib/auth.tsx"
 import Link from "next/link"
-import { Loader2, User, Briefcase } from "lucide-react"
+import { Loader2, User, Briefcase, AlertCircle } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { cn } from "@/lib/utils"
+// Firebase Imports
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -28,7 +34,9 @@ const formSchema = z.object({
 })
 
 export function RegisterForm() {
-  const { register, loading } = useAuth();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,16 +44,85 @@ export function RegisterForm() {
       name: "",
       email: "",
       password: "",
+      role: "client",
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    register(values.name, values.email, values.password, values.role)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+    setError(null);
+    try {
+      // 1. Create Auth User
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+
+      // 2. Update Auth Profile (Display Name)
+      await updateProfile(user, {
+        displayName: values.name
+      });
+
+      // 3. Create Firestore User Document (Atomic Role Assignment)
+      // We do this client-side to ensure the role is correctly set immediately.
+      // Shared Types compliance is ensured by manual matching here.
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: values.email,
+        displayName: values.name,
+        avatarUrl: user.photoURL || "", // Renamed property
+        role: values.role,
+
+        // New required fields with default values
+        phone: "",
+        cc: "",
+        birthYear: 0,
+        h3Res9: "", // Location not set yet
+        preferredCategories: [],
+        expertPopupDismissals: 0,
+
+        bio: "", // Optional/Future use but good to init
+        location: null,
+        rating: 0,
+        reviewCount: 0,
+        skills: [],
+        portfolio: [],
+
+        createdAt: serverTimestamp(),
+        lastActiveAt: serverTimestamp(), // Renamed from updatedAt
+        isVerified: false
+      });
+
+      // 4. Redirect
+      router.push("/dashboard");
+
+    } catch (err: any) {
+      console.error("Registration error:", err);
+      // Map Firebase error codes to user-friendly messages
+      let message = "Something went wrong. Please try again.";
+      if (err.code === 'auth/email-already-in-use') {
+        message = "This email is already in use.";
+      } else if (err.code === 'auth/weak-password') {
+        message = "Password is too weak.";
+      } else if (err.code === 'auth/invalid-email') {
+        message = "Invalid email address.";
+      }
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
         <FormField
           control={form.control}
           name="name"
@@ -99,28 +176,28 @@ export function RegisterForm() {
                 >
                   <FormItem>
                     <FormLabel className={cn(
-                        "flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer",
-                        field.value === 'client' && "border-primary"
+                      "flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer transition-all",
+                      field.value === 'client' && "border-[#34af00] bg-green-50"
                     )}>
-                        <FormControl>
-                           <RadioGroupItem value="client" className="sr-only"/>
-                        </FormControl>
-                        <User className="mb-3 h-6 w-6" />
-                        Client
-                        <FormDescription className="text-xs text-center leading-normal">I need to hire for a project.</FormDescription>
+                      <FormControl>
+                        <RadioGroupItem value="client" className="sr-only" />
+                      </FormControl>
+                      <User className={cn("mb-3 h-6 w-6", field.value === 'client' ? "text-[#34af00]" : "text-gray-500")} />
+                      Client
+                      <FormDescription className="text-xs text-center leading-normal mt-1">I need to hire for a project.</FormDescription>
                     </FormLabel>
                   </FormItem>
                   <FormItem>
                     <FormLabel className={cn(
-                        "flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer",
-                        field.value === 'expert' && "border-primary"
+                      "flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer transition-all",
+                      field.value === 'expert' && "border-[#34af00] bg-green-50"
                     )}>
-                        <FormControl>
-                            <RadioGroupItem value="expert" className="sr-only"/>
-                        </FormControl>
-                        <Briefcase className="mb-3 h-6 w-6" />
-                        Expert
-                        <FormDescription className="text-xs text-center leading-normal">I'm looking for work.</FormDescription>
+                      <FormControl>
+                        <RadioGroupItem value="expert" className="sr-only" />
+                      </FormControl>
+                      <Briefcase className={cn("mb-3 h-6 w-6", field.value === 'expert' ? "text-[#34af00]" : "text-gray-500")} />
+                      Expert
+                      <FormDescription className="text-xs text-center leading-normal mt-1">I'm looking for work.</FormDescription>
                     </FormLabel>
                   </FormItem>
                 </RadioGroup>
@@ -130,16 +207,16 @@ export function RegisterForm() {
           )}
         />
         <div>
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full bg-[#34af00] hover:bg-[#2d9600] text-white" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Create account
           </Button>
         </div>
-         <p className="text-center text-sm text-muted-foreground">
-            Already have an account?{' '}
-            <Link href="/login" className="font-medium text-primary hover:underline">
-                Log in
-            </Link>
+        <p className="text-center text-sm text-muted-foreground">
+          Already have an account?{' '}
+          <Link href="/login" className="font-medium text-[#34af00] hover:underline">
+            Log in
+          </Link>
         </p>
       </form>
     </Form>

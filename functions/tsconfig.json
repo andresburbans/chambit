@@ -8,6 +8,10 @@
         "sourceMap": true,
         "strict": true,
         "target": "es2022",
+        "rootDirs": [
+            "src",
+            "../../shared"
+        ],
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,

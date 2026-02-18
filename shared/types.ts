@@ -25,7 +25,7 @@ export type EducationLevel =
 
 export interface User {
     uid: string;
-    name: string;
+    displayName: string;
     email: string;
     phone: string;
     cc: string;

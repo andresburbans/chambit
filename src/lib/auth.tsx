@@ -1,83 +1,94 @@
-"use client"
-import type { User } from '@/lib/types';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+"use client";
 
-// Mock user data
-const mockClient: User = {
-  id: 'client123',
-  name: 'Alex Doe',
-  email: 'alex.doe@example.com',
-  avatarUrl: 'https://picsum.photos/seed/avatar1/200/200',
-  role: 'client',
-};
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  User as FirebaseUser,
+  onAuthStateChanged,
+  signOut as firebaseSignOut
+} from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "./firebase";
+import { User } from "../../shared/types";
 
-const mockExpert: User = {
-  id: 'expert456',
-  name: 'Jordan Smith',
-  email: 'jordan.smith@example.com',
-  avatarUrl: 'https://picsum.photos/seed/avatar2/200/200',
-  role: 'expert',
-};
-
+// Extended Auth Context Type
 interface AuthContextType {
-  user: User | null;
-  login: (email: string, pass: string) => void;
-  logout: () => void;
-  register: (name: string, email: string, pass: string, role: 'client' | 'expert') => void;
+  user: User | null; // Our custom User type with roles
+  firebaseUser: FirebaseUser | null; // Raw Firebase Auth user
   loading: boolean;
+  logout: () => Promise<void>;
+  refreshProfile: () => Promise<void>; // To re-fetch role/data from Firestore
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Simulate login
-  const login = (email: string) => {
-    setLoading(true);
-    setTimeout(() => {
-      // Simple logic to switch between roles for demo purposes
-      if (email.includes('expert')) {
-        setUser(mockExpert);
+  // Function to fetch extended user profile from Firestore
+  const fetchUserProfile = async (uid: string) => {
+    try {
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        setUser(userSnap.data() as User);
       } else {
-        setUser(mockClient);
+        // Fallback if generic profile doesn't exist yet (race condition with cloud function)
+        console.warn("User profile not found in Firestore yet. Waiting for trigger...");
+        // Temporary minimalist user while Cloud Function runs
+        setUser({
+          uid: uid,
+          email: firebaseUser?.email || "",
+          displayName: firebaseUser?.displayName || "Usuario",
+          role: "client", // Default pending sync
+          photoURL: firebaseUser?.photoURL || "",
+          metadata: { creationTime: firebaseUser?.metadata.creationTime },
+        } as unknown as User);
       }
-      setLoading(false);
-    }, 1000);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
   };
 
-  // Simulate logout
-  const logout = () => {
+  useEffect(() => {
+    // Real-time listener for Auth state changes
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      setFirebaseUser(authUser);
+
+      if (authUser) {
+        await fetchUserProfile(authUser.uid);
+      } else {
+        setUser(null);
+      }
+
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const logout = async () => {
+    await firebaseSignOut(auth);
     setUser(null);
   };
 
-  // Simulate register
-  const register = (name: string, email: string, pass: string, role: 'client' | 'expert') => {
-    setLoading(true);
-    setTimeout(() => {
-      setUser({
-        id: `new-${Math.random()}`,
-        name,
-        email,
-        role,
-        avatarUrl: 'https://picsum.photos/seed/newuser/200/200'
-      });
-      setLoading(false);
-    }, 1000);
-  }
+  const refreshProfile = async () => {
+    if (firebaseUser) await fetchUserProfile(firebaseUser.uid);
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
+    <AuthContext.Provider value={{ user, firebaseUser, loading, logout, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
+export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-};
+}
