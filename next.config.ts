@@ -8,6 +8,8 @@ const withSerwist = withSerwistInit({
 });
 
 const nextConfig: NextConfig = {
+  output: 'export', // Required for Firebase Hosting static deploy
+
   // TypeScript & ESLint — we'll progressively fix these
   typescript: {
     ignoreBuildErrors: true,
@@ -22,6 +24,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "placehold.co" },
       { protocol: "https", hostname: "firebasestorage.googleapis.com" },
     ],
+    unoptimized: true, // Required for static export (no Node server for image optimization)
   },
 };
 
