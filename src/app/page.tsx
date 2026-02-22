@@ -1,13 +1,29 @@
-import { ServiceBrowser } from '@/components/service-browser';
-import { getServices } from '@/lib/placeholder-data';
+import {
+  HomeMobileHeader,
+  HomeSearchBar,
+  HomeCategoryGrid,
+  HomeQuickSearches,
+  HomeHowItWorks,
+  HomeValueProps,
+  HomeNearbySection,
+  HomeDesktopLayout,
+} from "@/components/home/home-content";
 
 export default function Home() {
-  // In a real application, you would fetch this data from your API
-  const services = getServices();
-
   return (
-    <div className="h-[calc(100vh-var(--header-height))] overflow-y-auto">
-      <ServiceBrowser services={services} />
-    </div>
+    <>
+      {/* ── DESKTOP (md+): full landing-page layout with sections ── */}
+      <HomeDesktopLayout />
+
+      {/* ── MOBILE (<md): app-style vertical layout ── */}
+      <div className="md:hidden bg-white min-h-screen">
+        <HomeMobileHeader />
+        <HomeCategoryGrid />
+        <HomeHowItWorks />
+        <HomeValueProps />
+        <HomeNearbySection />
+        <HomeQuickSearches />
+      </div>
+    </>
   );
 }

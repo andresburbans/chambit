@@ -71,7 +71,8 @@ export function FooterAurora() {
                         <div className="space-y-3">
                             <h4 className="text-base font-semibold text-[#0f0f0f] tracking-wide">Plataforma</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link className="text-[#0f0f0f]/80 hover:text-[#34af00] transition-colors" href="#">Cómo funciona</Link></li>
+                                <li><Link className="text-[#0f0f0f]/80 hover:text-[#34af00] transition-colors" href="/nosotros">Nosotros</Link></li>
+                                <li><Link className="text-[#0f0f0f]/80 hover:text-[#34af00] transition-colors" href="/como-funciona">Cómo funciona</Link></li>
                                 <li><Link className="text-[#0f0f0f]/80 hover:text-[#34af00]" href="/">Explorar servicios</Link></li>
                                 <li><Link className="text-[#0f0f0f]/80 hover:text-[#34af00]" href="/dashboard/requests">Mis solicitudes</Link></li>
                             </ul>

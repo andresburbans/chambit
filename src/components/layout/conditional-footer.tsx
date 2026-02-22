@@ -6,8 +6,8 @@ import { FooterAurora } from "./footer-aurora";
 export function ConditionalFooter() {
     const pathname = usePathname();
 
-    // Don't show footer on home page (search with infinite scroll)
-    if (pathname === "/") {
+    // Hide footer inside dashboard and search (full-height infinite scroll pages)
+    if (pathname.startsWith("/dashboard") || pathname.startsWith("/search")) {
         return null;
     }
 

@@ -116,11 +116,13 @@ const ChartTooltipContent = React.forwardRef<
   (
     {
       active,
+      // @ts-ignore — payload exists at runtime but Recharts types don't expose it on the forwardRef signature
       payload,
       className,
       indicator = "dot",
       hideLabel = false,
       hideIndicator = false,
+      // @ts-ignore — label exists at runtime but Recharts types don't expose it on the forwardRef signature
       label,
       labelFormatter,
       labelClassName,

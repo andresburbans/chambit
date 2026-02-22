@@ -10,12 +10,12 @@ const withSerwist = withSerwistInit({
 const nextConfig: NextConfig = {
   output: 'export', // Required for Firebase Hosting static deploy
 
-  // TypeScript & ESLint — we'll progressively fix these
+  // TypeScript & ESLint
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   images: {
     remotePatterns: [

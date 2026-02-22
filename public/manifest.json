@@ -2,10 +2,10 @@
     "name": "Chambit",
     "short_name": "Chambit",
     "description": "Conecta con expertos locales para cualquier servicio que necesites.",
-    "start_url": "/",
+    "start_url": "/?source=pwa",
     "display": "standalone",
     "background_color": "#ffffff",
-    "theme_color": "#000000",
+    "theme_color": "#34af00",
     "icons": [
         {
             "src": "/web-app-manifest-192x192.png",

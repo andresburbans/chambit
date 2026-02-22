@@ -22,17 +22,17 @@ export function UserNav() {
     return null
   }
 
-  // Safe extraction of initials (fallback to 'U' if no display name)
-  const userInitials = user.displayName
-    ? user.displayName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)
-    : 'U';
+  // Initials: prefer firstName + lastName, fallback to displayName split
+  const userInitials = user.firstName
+    ? `${user.firstName[0]}${user.lastName?.[0] ?? ''}`.toUpperCase()
+    : (user.displayName?.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) ?? 'U');
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10 border border-muted">
-            <AvatarImage src={user.photoURL} alt={user.displayName} />
+            <AvatarImage src={user.avatarUrl} alt={user.displayName} />
             <AvatarFallback className="bg-[#34af00] text-white">{userInitials}</AvatarFallback>
           </Avatar>
         </Button>

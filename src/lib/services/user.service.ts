@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, type UpdateData, type DocumentData } from "firebase/firestore";
 import { latLngToCell } from "h3-js";
 import { User, ExpertProfile } from "../../../shared/types";
 
@@ -32,13 +32,10 @@ export const UserService = {
     /**
      * Updates basic user profile information.
      */
-    async updateProfile(uid: string, data: Partial<User>) {
+    async updateProfile(uid: string, data: UpdateData<DocumentData>) {
         try {
             const userRef = doc(db, "users", uid);
-            // Filter out fields that shouldn't be updated directly here (like role or rating)
-            const { role, rating, reviewCount, ...safeData } = data as any;
-
-            await updateDoc(userRef, safeData);
+            await updateDoc(userRef, data);
         } catch (error) {
             console.error("Error updating profile:", error);
             throw error;
@@ -63,8 +60,8 @@ export const UserService = {
             // Using dot notation for nested updates map
             const updatePayload: any = {};
 
-            if (expertData.educationLevel) updatePayload["expert.educationLevel"] = expertData.educationLevel;
-            if (expertData.coverageRadiusKm) updatePayload["expert.coverageRadiusKm"] = expertData.coverageRadiusKm;
+            if (expertData.educationLevel !== undefined) updatePayload["expert.educationLevel"] = expertData.educationLevel;
+            if (expertData.coverageRadiusKm !== undefined) updatePayload["expert.coverageRadiusKm"] = expertData.coverageRadiusKm;
             // activeJobCount and verified are usually system managed, but allowing edit for MVP prototype if needed
 
             await updateDoc(userRef, updatePayload);

@@ -11,7 +11,11 @@
         "start": "npm run shell",
         "deploy": "firebase deploy --only functions",
         "logs": "firebase functions:log",
-        "lint": "tsc --noEmit"
+        "lint": "tsc --noEmit",
+        "seed": "npx ts-node -P ../tsconfig.seed.json src/scripts/seedData.ts",
+        "seed:v2": "npx ts-node -P ../tsconfig.seed.json src/scripts/seedDataV2.ts",
+        "seed:v2b": "npx ts-node -P ../tsconfig.seed.json src/scripts/seedDataV2b.ts",
+        "seed:backfill": "npx ts-node -P ../tsconfig.seed.json src/scripts/backfillH3Index.ts"
     },
     "engines": {
         "node": "22"

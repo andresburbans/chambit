@@ -61,35 +61,46 @@ export function RegisterForm() {
         displayName: values.name
       });
 
-      // 3. Create Firestore User Document (Atomic Role Assignment)
-      // We do this client-side to ensure the role is correctly set immediately.
-      // Shared Types compliance is ensured by manual matching here.
+      // 3. Parse name into firstName / lastName (Progressive Name Pattern)
+      // Strategy: split on first space. User can correct in profile settings later.
+      const trimmedName = values.name.trim();
+      const spaceIdx = trimmedName.indexOf(" ");
+      const firstName = spaceIdx === -1 ? trimmedName : trimmedName.slice(0, spaceIdx).trim();
+      const lastName = spaceIdx === -1 ? "" : trimmedName.slice(spaceIdx + 1).trim();
+
+      // 4. Create Firestore User Document — strictly typed against shared/types.ts User
+      // Note: onUserCreate Cloud Function also runs on the server as a safety net (merge:true).
+      // We write here too so the client sees data immediately without waiting for the trigger.
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: values.email,
         displayName: values.name,
-        avatarUrl: user.photoURL || "", // Renamed property
+        firstName,
+        lastName,
+        avatarUrl: user.photoURL || "",
         role: values.role,
 
-        // New required fields with default values
+        // Profile — empty until user fills in profile settings
         phone: "",
         cc: "",
         birthYear: 0,
-        h3Res9: "", // Location not set yet
+        fcmToken: "",
+
+        // Preferences
         preferredCategories: [],
         expertPopupDismissals: 0,
 
-        bio: "", // Optional/Future use but good to init
-        location: null,
-        rating: 0,
-        reviewCount: 0,
-        skills: [],
-        portfolio: [],
+        // Geolocation — empty until user grants GPS permission
+        h3Res9: "",
+        country: "CO",                       // Default: Colombia
+        // geozoneId omitted — set later when expert links to a geozone
+
+        // Access control — auto-enabled for Colombia
+        isExpertEnabled: true,
 
         createdAt: serverTimestamp(),
-        lastActiveAt: serverTimestamp(), // Renamed from updatedAt
-        isVerified: false
-      });
+        lastActiveAt: serverTimestamp(),
+      }, { merge: true }); // merge:true is safe — avoids race condition with the Cloud Function
 
       // 4. Redirect
       router.push("/dashboard");

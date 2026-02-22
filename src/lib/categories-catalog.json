@@ -1,0 +1,362 @@
+[
+    {
+        "id": "sub-electricidad",
+        "name": "Electricidad",
+        "categoryId": "cat-reparacion",
+        "categoryName": "Reparación y mantenimiento"
+    },
+    {
+        "id": "sub-plomeria",
+        "name": "Plomería",
+        "categoryId": "cat-reparacion",
+        "categoryName": "Reparación y mantenimiento"
+    },
+    {
+        "id": "sub-cerrajeria",
+        "name": "Cerrajería",
+        "categoryId": "cat-reparacion",
+        "categoryName": "Reparación y mantenimiento"
+    },
+    {
+        "id": "sub-refrigeracion",
+        "name": "Refrigeración y A/C",
+        "categoryId": "cat-reparacion",
+        "categoryName": "Reparación y mantenimiento"
+    },
+    {
+        "id": "sub-electrodomest",
+        "name": "Electrodomésticos",
+        "categoryId": "cat-reparacion",
+        "categoryName": "Reparación y mantenimiento"
+    },
+    {
+        "id": "sub-enfermeria",
+        "name": "Enfermería domiciliaria",
+        "categoryId": "cat-cuidado",
+        "categoryName": "Cuidado de personas y mascotas"
+    },
+    {
+        "id": "sub-cuidado-adulto",
+        "name": "Cuidado adulto mayor",
+        "categoryId": "cat-cuidado",
+        "categoryName": "Cuidado de personas y mascotas"
+    },
+    {
+        "id": "sub-cuidado-ninos",
+        "name": "Cuidado de niños",
+        "categoryId": "cat-cuidado",
+        "categoryName": "Cuidado de personas y mascotas"
+    },
+    {
+        "id": "sub-paseador",
+        "name": "Paseador de mascotas",
+        "categoryId": "cat-cuidado",
+        "categoryName": "Cuidado de personas y mascotas"
+    },
+    {
+        "id": "sub-vet-domicilio",
+        "name": "Veterinaria a domicilio",
+        "categoryId": "cat-cuidado",
+        "categoryName": "Cuidado de personas y mascotas"
+    },
+    {
+        "id": "sub-albanileria",
+        "name": "Albañilería",
+        "categoryId": "cat-construccion",
+        "categoryName": "Construcción e ingeniería"
+    },
+    {
+        "id": "sub-pintura",
+        "name": "Pintura",
+        "categoryId": "cat-construccion",
+        "categoryName": "Construcción e ingeniería"
+    },
+    {
+        "id": "sub-pisos",
+        "name": "Pisos y enchapes",
+        "categoryId": "cat-construccion",
+        "categoryName": "Construcción e ingeniería"
+    },
+    {
+        "id": "sub-drywall",
+        "name": "Drywall y cielos rasos",
+        "categoryId": "cat-construccion",
+        "categoryName": "Construcción e ingeniería"
+    },
+    {
+        "id": "sub-impermeab",
+        "name": "Impermeabilización",
+        "categoryId": "cat-construccion",
+        "categoryName": "Construcción e ingeniería"
+    },
+    {
+        "id": "sub-planos",
+        "name": "Planos y diseño",
+        "categoryId": "cat-arquitectura",
+        "categoryName": "Arquitectura"
+    },
+    {
+        "id": "sub-supervision",
+        "name": "Supervisión de obra",
+        "categoryId": "cat-arquitectura",
+        "categoryName": "Arquitectura"
+    },
+    {
+        "id": "sub-consultoria-arq",
+        "name": "Consultoría",
+        "categoryId": "cat-arquitectura",
+        "categoryName": "Arquitectura"
+    },
+    {
+        "id": "sub-logo",
+        "name": "Diseño de logo",
+        "categoryId": "cat-diseno",
+        "categoryName": "Diseño gráfico e imprenta"
+    },
+    {
+        "id": "sub-impresion",
+        "name": "Impresión",
+        "categoryId": "cat-diseno",
+        "categoryName": "Diseño gráfico e imprenta"
+    },
+    {
+        "id": "sub-branding",
+        "name": "Branding",
+        "categoryId": "cat-diseno",
+        "categoryName": "Diseño gráfico e imprenta"
+    },
+    {
+        "id": "sub-limpieza-gral",
+        "name": "Limpieza general",
+        "categoryId": "cat-limpieza",
+        "categoryName": "Limpieza y mantenimiento del hogar"
+    },
+    {
+        "id": "sub-limpieza-fondo",
+        "name": "Limpieza a fondo",
+        "categoryId": "cat-limpieza",
+        "categoryName": "Limpieza y mantenimiento del hogar"
+    },
+    {
+        "id": "sub-limpieza-vidrio",
+        "name": "Limpieza de vidrios",
+        "categoryId": "cat-limpieza",
+        "categoryName": "Limpieza y mantenimiento del hogar"
+    },
+    {
+        "id": "sub-control-plagas",
+        "name": "Control de plagas",
+        "categoryId": "cat-limpieza",
+        "categoryName": "Limpieza y mantenimiento del hogar"
+    },
+    {
+        "id": "sub-closets",
+        "name": "Closets y muebles",
+        "categoryId": "cat-instalaciones",
+        "categoryName": "Instalaciones y colocaciones"
+    },
+    {
+        "id": "sub-cocinas",
+        "name": "Cocinas integrales",
+        "categoryId": "cat-instalaciones",
+        "categoryName": "Instalaciones y colocaciones"
+    },
+    {
+        "id": "sub-aires",
+        "name": "Instalación A/C",
+        "categoryId": "cat-instalaciones",
+        "categoryName": "Instalaciones y colocaciones"
+    },
+    {
+        "id": "sub-cameras",
+        "name": "Cámaras de seguridad",
+        "categoryId": "cat-instalaciones",
+        "categoryName": "Instalaciones y colocaciones"
+    },
+    {
+        "id": "sub-decoracion-int",
+        "name": "Decoración interior",
+        "categoryId": "cat-decoracion",
+        "categoryName": "Decoración y estética de interiores"
+    },
+    {
+        "id": "sub-cortinas",
+        "name": "Cortinas y persianas",
+        "categoryId": "cat-decoracion",
+        "categoryName": "Decoración y estética de interiores"
+    },
+    {
+        "id": "sub-tapizado",
+        "name": "Tapizado de muebles",
+        "categoryId": "cat-decoracion",
+        "categoryName": "Decoración y estética de interiores"
+    },
+    {
+        "id": "sub-peluqueria",
+        "name": "Peluquería a domicilio",
+        "categoryId": "cat-belleza",
+        "categoryName": "Belleza, estética y cuidado personal"
+    },
+    {
+        "id": "sub-manicure",
+        "name": "Manicure y pedicure",
+        "categoryId": "cat-belleza",
+        "categoryName": "Belleza, estética y cuidado personal"
+    },
+    {
+        "id": "sub-maquillaje",
+        "name": "Maquillaje",
+        "categoryId": "cat-belleza",
+        "categoryName": "Belleza, estética y cuidado personal"
+    },
+    {
+        "id": "sub-masajes",
+        "name": "Masajes terapéuticos",
+        "categoryId": "cat-belleza",
+        "categoryName": "Belleza, estética y cuidado personal"
+    },
+    {
+        "id": "sub-soldadura-gral",
+        "name": "Soldadura general",
+        "categoryId": "cat-soldadura",
+        "categoryName": "Soldadura y metalurgia"
+    },
+    {
+        "id": "sub-aluminio",
+        "name": "Aluminio y vidrio",
+        "categoryId": "cat-soldadura",
+        "categoryName": "Soldadura y metalurgia"
+    },
+    {
+        "id": "sub-hierro",
+        "name": "Hierro y acero",
+        "categoryId": "cat-soldadura",
+        "categoryName": "Soldadura y metalurgia"
+    },
+    {
+        "id": "sub-mec-automotriz",
+        "name": "Mecánica automotriz",
+        "categoryId": "cat-mecanica",
+        "categoryName": "Servicios de mecánica"
+    },
+    {
+        "id": "sub-mec-motos",
+        "name": "Mecánica de motos",
+        "categoryId": "cat-mecanica",
+        "categoryName": "Servicios de mecánica"
+    },
+    {
+        "id": "sub-electrico-auto",
+        "name": "Eléctrico automotriz",
+        "categoryId": "cat-mecanica",
+        "categoryName": "Servicios de mecánica"
+    },
+    {
+        "id": "sub-jardineria",
+        "name": "Jardinería",
+        "categoryId": "cat-agricultura",
+        "categoryName": "Agricultura y campo"
+    },
+    {
+        "id": "sub-poda",
+        "name": "Poda y tala",
+        "categoryId": "cat-agricultura",
+        "categoryName": "Agricultura y campo"
+    },
+    {
+        "id": "sub-campo",
+        "name": "Labores de campo",
+        "categoryId": "cat-agricultura",
+        "categoryName": "Agricultura y campo"
+    },
+    {
+        "id": "sub-entrenador",
+        "name": "Entrenador personal",
+        "categoryId": "cat-deporte",
+        "categoryName": "Deporte, bienestar y salud"
+    },
+    {
+        "id": "sub-nutricion",
+        "name": "Nutricionista",
+        "categoryId": "cat-deporte",
+        "categoryName": "Deporte, bienestar y salud"
+    },
+    {
+        "id": "sub-yoga",
+        "name": "Yoga y meditación",
+        "categoryId": "cat-deporte",
+        "categoryName": "Deporte, bienestar y salud"
+    },
+    {
+        "id": "sub-contable",
+        "name": "Contabilidad",
+        "categoryId": "cat-asesoria",
+        "categoryName": "Asesoría financiera, legal y jurídica"
+    },
+    {
+        "id": "sub-juridico",
+        "name": "Asesoría jurídica",
+        "categoryId": "cat-asesoria",
+        "categoryName": "Asesoría financiera, legal y jurídica"
+    },
+    {
+        "id": "sub-impuestos",
+        "name": "Declaración de renta",
+        "categoryId": "cat-asesoria",
+        "categoryName": "Asesoría financiera, legal y jurídica"
+    },
+    {
+        "id": "sub-vet-clinica",
+        "name": "Consulta veterinaria",
+        "categoryId": "cat-veterinaria",
+        "categoryName": "Veterinaria"
+    },
+    {
+        "id": "sub-estetica-animal",
+        "name": "Estética animal",
+        "categoryId": "cat-veterinaria",
+        "categoryName": "Veterinaria"
+    },
+    {
+        "id": "sub-enf-domicilio",
+        "name": "Enfermería domiciliaria",
+        "categoryId": "cat-enfermeria",
+        "categoryName": "Enfermería"
+    },
+    {
+        "id": "sub-toma-muestras",
+        "name": "Toma de muestras",
+        "categoryId": "cat-enfermeria",
+        "categoryName": "Enfermería"
+    },
+    {
+        "id": "sub-curaciones",
+        "name": "Curaciones y vendajes",
+        "categoryId": "cat-enfermeria",
+        "categoryName": "Enfermería"
+    },
+    {
+        "id": "sub-mudanzas",
+        "name": "Mudanzas y fletes",
+        "categoryId": "cat-otras",
+        "categoryName": "Otras"
+    },
+    {
+        "id": "sub-fotografia",
+        "name": "Fotografía",
+        "categoryId": "cat-otras",
+        "categoryName": "Otras"
+    },
+    {
+        "id": "sub-traduccion",
+        "name": "Traducción",
+        "categoryId": "cat-otras",
+        "categoryName": "Otras"
+    },
+    {
+        "id": "sub-clases",
+        "name": "Clases particulares",
+        "categoryId": "cat-otras",
+        "categoryName": "Otras"
+    }
+]

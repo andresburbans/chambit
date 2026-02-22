@@ -36,6 +36,14 @@ export function Footer() {
                     <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[#0f0f0f]">
                         <span className="text-gray-500">© {year} Chambit</span>
                         <span className="inline-block w-px h-4 bg-gray-200" />
+                        <Link className="hover:text-[#34af00] transition-colors" href="/nosotros">
+                            Nosotros
+                        </Link>
+                        <span className="inline-block w-px h-4 bg-gray-200" />
+                        <Link className="hover:text-[#34af00] transition-colors" href="/como-funciona">
+                            Cómo funciona
+                        </Link>
+                        <span className="inline-block w-px h-4 bg-gray-200" />
                         <Link className="hover:text-[#34af00] transition-colors" href="/terminos">
                             Términos y condiciones
                         </Link>

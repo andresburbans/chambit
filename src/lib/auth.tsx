@@ -26,26 +26,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const normalizeUser = (raw: Record<string, unknown>, authUser: FirebaseUser): User => {
+    const safeRole = typeof raw.role === "string" ? raw.role : "";
+
+    return {
+      uid: authUser.uid,
+      email: (raw.email as string) || authUser.email || "",
+      displayName: (raw.displayName as string) || authUser.displayName || "Usuario",
+      firstName: (raw.firstName as string) || undefined,
+      lastName: (raw.lastName as string) || undefined,
+      phone: (raw.phone as string) || "",
+      cc: (raw.cc as string) || "",
+      birthYear: typeof raw.birthYear === "number" ? raw.birthYear : 0,
+      avatarUrl: (raw.avatarUrl as string) || (raw.photoURL as string) || authUser.photoURL || "",
+      role: safeRole as User["role"],
+      preferredCategories: Array.isArray(raw.preferredCategories) ? (raw.preferredCategories as string[]) : [],
+      expertPopupDismissals: typeof raw.expertPopupDismissals === "number" ? raw.expertPopupDismissals : 0,
+      fcmToken: (raw.fcmToken as string) || "",
+      h3Res9: (raw.h3Res9 as string) || "",
+      country: (raw.country as string) || "CO",
+      geozoneId: (raw.geozoneId as string) || undefined,
+      isExpertEnabled: typeof raw.isExpertEnabled === "boolean" ? raw.isExpertEnabled : true,
+      createdAt: (raw.createdAt as User["createdAt"]) || ({ seconds: 0, nanoseconds: 0, toDate: () => new Date(0) } as User["createdAt"]),
+      lastActiveAt: (raw.lastActiveAt as User["lastActiveAt"]) || ({ seconds: 0, nanoseconds: 0, toDate: () => new Date(0) } as User["lastActiveAt"]),
+      expert: (raw.expert as User["expert"]) || undefined,
+    };
+  };
+
   // Function to fetch extended user profile from Firestore
-  const fetchUserProfile = async (uid: string) => {
+  const fetchUserProfile = async (authUser: FirebaseUser) => {
     try {
-      const userRef = doc(db, "users", uid);
+      const userRef = doc(db, "users", authUser.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
-        setUser(userSnap.data() as User);
+        setUser(normalizeUser(userSnap.data() as Record<string, unknown>, authUser));
       } else {
-        // Fallback if generic profile doesn't exist yet (race condition with cloud function)
-        console.warn("User profile not found in Firestore yet. Waiting for trigger...");
-        // Temporary minimalist user while Cloud Function runs
-        setUser({
-          uid: uid,
-          email: firebaseUser?.email || "",
-          displayName: firebaseUser?.displayName || "Usuario",
-          role: "client", // Default pending sync
-          photoURL: firebaseUser?.photoURL || "",
-          metadata: { creationTime: firebaseUser?.metadata.creationTime },
-        } as unknown as User);
+        // Minimal safe profile until onboarding creates the full document.
+        setUser(normalizeUser({ role: "" }, authUser));
       }
     } catch (error) {
       console.error("Error fetching user profile:", error);
@@ -58,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setFirebaseUser(authUser);
 
       if (authUser) {
-        await fetchUserProfile(authUser.uid);
+        await fetchUserProfile(authUser);
       } else {
         setUser(null);
       }
@@ -75,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const refreshProfile = async () => {
-    if (firebaseUser) await fetchUserProfile(firebaseUser.uid);
+    if (firebaseUser) await fetchUserProfile(firebaseUser);
   };
 
   return (

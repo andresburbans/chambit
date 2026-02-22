@@ -1,84 +1,106 @@
-# Chambit PWA
+﻿# Chambit | Si hay chamba, hay Chambit. 
 
-## Descripción
-Chambit es una Progressive Web App (PWA) que conecta a clientes con expertos locales para diversos servicios. Inspirada en plataformas como Indeed, permite a los usuarios buscar, ofertar y gestionar servicios de manera intuitiva, con una interfaz responsiva y moderna.
+Chambit es una app web (PWA) que conecta personas con expertos locales para resolver necesidades reales de forma rápida, cercana y con contexto territorial.
 
-## Características Principales
-- **PWA (Progressive Web App):** Instalable en dispositivos, funciona offline con service worker.
-- **Autenticación de Usuarios:** Registro e inicio de sesión con email/contraseña o Google.
-- **Gestión de Perfiles (CRUD):** Creación y edición de perfiles para clientes y expertos.
-- **Búsqueda de Servicios:** Barra de búsqueda con autocompletado, filtros y visualización responsiva.
-- **Flujo de Ofertas:** Clientes pueden ofertar por servicios con validaciones.
-- **Dashboards:** Paneles diferenciados para clientes ("Mis Solicitudes") y expertos ("Mis Oportunidades").
-- **UI/UX Responsiva:** Adaptable a móvil, tablet y escritorio con paleta de colores personalizada.
+## 🚀 ¿Qué problema resuelve?
+En muchos barrios y ciudades hay talento disponible, pero encontrar a la persona correcta suele ser lento, informal y poco transparente.
 
-## Stack Tecnológico
-- **Frontend:** Next.js 15 (App Router), TypeScript, Tailwind CSS, Radix UI.
-- **Backend:** Firebase (Authentication, Firestore, Cloud Storage).
-- **Formularios y Validación:** React Hook Form, Zod.
-- **IA:** Genkit AI (para futuras integraciones).
-- **Otros:** Lucide React (iconos), Date-fns (fechas), Embla Carousel (carruseles).
+Chambit reduce esa fricción con:
+- Búsqueda por servicio y ubicación.
+- Flujo de solicitud/oferta entre cliente y experto.
+- Paneles para seguimiento de oportunidades.
+- Experiencia mobile-first, instalable como PWA.
 
-## Configuración del Entorno
+## 🌐 Puesdes ver la app funcional aqui!
+Para ver la web app funcionando en entorno real:
 
-### Prerrequisitos
-- Node.js (versión 18 o superior)
-- npm o yarn
-- Cuenta de Firebase (para configuración de proyecto)
+[👉 Abrir Chambit en producción](PEGAR_AQUI_LINK_FIREBASE_HOSTING)
 
-### Pasos para Clonar el Repositorio
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/chambit.git
-   cd chambit
-   ```
+## 🏗️ Stack tecnológico
+- Next.js 15 + React 18 + TypeScript
+- Firebase (Auth, Firestore, Storage y Functions)
+- Lógica SIG con indexación hexagonal y contexto geoespacial
+- PWA (instalable, orientada a mobile)
+- Python para experimentación analítica y validación de modelos
 
-### Instalación de Dependencias
-1. Instala las dependencias:
-   ```bash
-   npm install
-   ```
+## 🧪 Ejecución local
+```bash
+npm install
+npm run dev
+```
 
-### Configuración de Firebase
-1. Crea un proyecto en [Firebase Console](https://console.firebase.google.com/).
-2. Habilita Authentication (con proveedores de email/contraseña y Google).
-3. Crea una base de datos Firestore.
-4. Ve a Configuración del Proyecto > SDK de Firebase > Config y copia la configuración.
-5. Crea un archivo `.env.local` en la raíz del proyecto y agrega las variables de entorno:
-   ```
-   NEXT_PUBLIC_FIREBASE_API_KEY=tu-api-key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=tu-auth-domain
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=tu-project-id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=tu-storage-bucket
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=tu-messaging-sender-id
-   NEXT_PUBLIC_FIREBASE_APP_ID=tu-app-id
-   ```
-   **Nota:** Nunca subas `.env.local` al repositorio; está en `.gitignore`.
+## 🧠 Novedad: Motor de búsqueda de alfanumérico a geo-contextual
+Chambit propone un motor que no se limita a comparar texto. En lugar de devolver resultados solo por coincidencia de palabras, estima **relevancia territorial + intención + probabilidad de éxito**.
 
-## Cómo Ejecutar el Proyecto
-1. Inicia el servidor de desarrollo:
-   ```bash
-   npm run dev
-   ```
-   La app estará disponible en `http://localhost:3000` (o el puerto configurado, ej. 9002 según `package.json`).
+### 1) Abstracción espacial con hexágonos (SIG)
+El territorio se discretiza en celdas hexagonales para medir vecindad real con menos sesgo direccional:
 
-2. Para desarrollo con Genkit AI:
-   ```bash
-   npm run genkit:dev
-   ```
+$$
+h = \mathcal{H}(\text{lat}, \text{lon}, r)
+$$
 
-3. Para build de producción:
-   ```bash
-   npm run build
-   npm start
-   ```
+donde $\mathcal{H}$ es el indexador espacial y $r$ la resolución. Sobre cada celda se construyen señales locales (densidad, oferta activa, histórico de respuesta, etc.).
 
-## Estructura de Carpetas
-- `/src/app`: Rutas de Next.js (páginas y layouts).
-- `/src/components`: Componentes reutilizables (UI, auth, services).
-- `/src/lib`: Utilidades, tipos, configuración de Firebase, datos placeholder.
-- `/src/hooks`: Hooks personalizados (ej. `use-mobile`).
-- `/docs`: Documentación adicional (blueprint).
-- `/public`: Archivos estáticos (favicon, imágenes).
+Una señal típica de cercanía puede modelarse con decaimiento exponencial:
 
-Para más detalles técnicos, consulta `ARCHITECTURE.md`.
+$$
+K(d)=e^{-d/\tau}
+$$
+
+con $d$ distancia efectiva y $\tau$ escala territorial.
+
+### 2) Principio bayesiano para confianza contextual
+La probabilidad de que un experto $E$ sea adecuado para una solicitud $q$ en un contexto $c$ puede expresarse como:
+
+$$
+P(E\mid q,c)=\frac{P(q,c\mid E)\,P(E)}{P(q,c)}
+$$
+
+Esto permite combinar evidencia previa (histórico, reputación, cumplimiento) con evidencia nueva (contexto actual).
+
+### 3) ML y DL para Learning to Rank (LRT)
+Con features semánticas, geoespaciales y de comportamiento, un modelo aprende una función de ranking:
+
+$$
+\hat{y}=f_{\theta}(x)
+$$
+
+Para entrenamiento por pares (pairwise ranking), una forma común de pérdida es:
+
+$$
+\mathcal{L}=\sum_{(i,j)} \log\left(1+e^{-(\hat{y}_i-\hat{y}_j)}\right)
+$$
+
+El objetivo es que los resultados más útiles para el usuario queden arriba de forma consistente.
+
+### 4) Fusión heurística final
+El score final combina componentes interpretable + aprendizaje:
+
+$$
+S=\alpha\,K(d)+\beta\,P(E\mid q,c)+\gamma\,f_{\theta}(x)+\delta\,A
+$$
+
+con:
+
+$$
+\alpha+\beta+\gamma+\delta=1
+$$
+
+Aquí $A$ representa ajustes de negocio/experiencia (disponibilidad, latencia de respuesta, estado operativo). Resultado: un ranking más humano, territorial y accionable.
+
+
+## 💛 Agradecimiento al reto Platzi
+Este proyecto fue impulsado por el Reto Developer Foundations de Platzi. Su enfoque educativo y el ritmo del reto me dieron la valentía para transformar una tesis con código desordenado y baja motivación en un camino claro, intenso y emocionante. Lo que estuvo estancado por meses avanzó en una semana de esfuerzo profundo con resultados gratificantes. Verlo hecho realidad ha sido una experiencia muy especial.
+
+## 👨‍💻 Autor
+**Andrés Burbano**  
+> **Lema:** "Disfruto soñar, amor crear."
+Cali, Colombia
+
+- Email: `Burbano.hub@gmail.com`
+- Instagram: https://www.instagram.com/burbano_va/
+- LinkedIn: https://www.linkedin.com/in/andresbusu/
+- GitHub: https://github.com/andresburbans
+
+## 📝 Nota
+Por razones de investigación aplicada y protección de la lógica de negocio, este repositorio expone el frontend y el código necesario para comprender la propuesta del proyecto.

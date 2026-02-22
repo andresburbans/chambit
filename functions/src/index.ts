@@ -6,7 +6,8 @@ admin.initializeApp();
 
 // Export triggers
 export * from "./triggers/users";
+export * from "./triggers/notifications";
 
-// TODO: Export other modules as we implement them (E02, E05, etc.)
-// export * from "./search/searchExperts";
-// export * from "./transactions";
+// Export callables (Data Engine)
+export * from "./callables/search";
+export * from "./callables/requests";

@@ -25,31 +25,62 @@ export type EducationLevel =
 
 export interface User {
     uid: string;
-    displayName: string;
+
+    // ── Identity ──────────────────────────────────────────────────────────────
+    // displayName: synched from Firebase Auth (Google) or entered at registration.
+    // On first login it holds the full name as a single string.
+    // firstName / lastName: populated when the user edits their profile.
+    // Rule: displayName ALWAYS mirrors `${firstName} ${lastName}` after first edit.
+    displayName: string;        // Full display name — present from day 1
+    firstName?: string;         // Set on profile completion (optional until then)
+    lastName?: string;          // Set on profile completion (optional until then)
+
     email: string;
-    phone: string;
-    cc: string;
-    birthYear: number;
+    phone: string;              // 10-digit Colombian phone (starts with 3)
+    cc: string;                 // Cédula de ciudadanía (6–12 digits). For future KYC.
+    birthYear: number;          // >= 18 years old
     avatarUrl: string;
     role: UserRole;
-    h3Res9: string; // Privacy-preserving location (E03)
-    preferredCategories: string[]; // Up to 5 category IDs
-    createdAt: FirebaseTimestamp;
-    lastActiveAt: FirebaseTimestamp;
-    expertPopupDismissals: number;
-    expert?: ExpertProfile;
 
-    // Validation & Geofencing
-    country: string; // ISO 3166-1 alpha-2 (e.g., "CO")
-    isExpertEnabled: boolean; // Managed by admin/system
-    geozoneId?: string; // Reference to active operating zone (e.g., "cali-urban")
+    // ── Preferences ───────────────────────────────────────────────────────────
+    preferredCategories: string[];  // Up to 5 category IDs
+    expertPopupDismissals: number;  // Counter: 0–5, then stop showing the popup
+
+    // ── Push Notifications ────────────────────────────────────────────────────
+    fcmToken?: string;           // Firebase Cloud Messaging token. Frontend writes this.
+
+    // ── Geolocation (H3 — never raw GPS) ─────────────────────────────────────
+    h3Res9: string;              // H3 cell at Res 9 (~170m). Empty string until user sets location.
+    country: string;             // ISO 3166-1 alpha-2 (e.g., "CO"). Derived from GPS on client.
+    geozoneId?: string;          // FK → geozones/{id}. Set when expert is linked to a zone.
+
+    // ── Expert Access Control ─────────────────────────────────────────────────
+    // isExpertEnabled: auto-true if GPS is inside Colombia (validated on client).
+    // Can be manually set to false by admin to suspend an expert account.
+    isExpertEnabled: boolean;
+
+    // ── Timestamps ────────────────────────────────────────────────────────────
+    createdAt: FirebaseTimestamp;
+    lastActiveAt: FirebaseTimestamp;  // Updated by client SDK — no Cloud Function needed.
+
+    // ── Expert Sub-Object (only when role includes 'expert') ──────────────────
+    expert?: ExpertProfile;
 }
 
 export interface ExpertProfile {
+    // Profile
+    bio?: string;                   // Public professional description
     educationLevel: EducationLevel[];
-    coverageRadiusKm: number;
-    activeJobCount: number;
-    verified: boolean;
+    coverageRadiusKm: number;       // How far the expert will travel
+
+    // State
+    activeJobCount: number;         // In-progress jobs right now. MVP max: 1
+    verified: boolean;              // KYC verification status
+    verifiedAt?: FirebaseTimestamp; // When they were verified
+
+    // Reputation (maintained by Cloud Function on each new Rating)
+    rating: number;                 // Bayesian average (0–5). Default: 0
+    ratingCount: number;            // Total ratings received. Default: 0
 }
 
 // ============================================================

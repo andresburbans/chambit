@@ -39,7 +39,7 @@ export function ProfileForm() {
         resolver: zodResolver(profileSchema),
         defaultValues: {
             displayName: user?.displayName || "",
-            bio: user?.bio || "",
+            bio: user?.expert?.bio || "",
             phone: user?.phone || "",
         },
     })
@@ -52,8 +52,9 @@ export function ProfileForm() {
         try {
             await UserService.updateProfile(user.uid, {
                 displayName: values.displayName,
-                bio: values.bio || "",
-                phone: values.phone || ""
+                phone: values.phone || "",
+                // bio lives inside the expert sub-object
+                ...(values.bio ? { 'expert.bio': values.bio } : {}),
             });
             await refreshProfile();
             setMsg({ type: 'success', text: 'Profile updated successfully.' });

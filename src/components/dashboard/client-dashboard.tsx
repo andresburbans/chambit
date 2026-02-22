@@ -1,4 +1,6 @@
 import { Badge } from "@/components/ui/badge";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -22,11 +24,20 @@ export function ClientDashboard() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>My Requests</CardTitle>
-        <CardDescription>
-          A list of your recent service requests.
-        </CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+        <div>
+          <CardTitle>Mis Solicitudes</CardTitle>
+          <CardDescription>
+            Tus servicios recientes.
+          </CardDescription>
+        </div>
+        <Link
+          href="/dashboard/new-request"
+          className="bg-[#34af00] hover:bg-[#2d9600] text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          <span className="hidden sm:inline">Nueva Solicitud</span>
+        </Link>
       </CardHeader>
       <CardContent>
         <Table>
